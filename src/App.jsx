@@ -91,13 +91,23 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="min-h-0 flex-1">
-                <LineAnimation
-                  phase={sim.phase}
-                  feeder={sim.targetFeeder}
-                  scenario={sim.activeScenario}
-                  compact
-                />
+              {/* Field simulation + Telemetry stacked under feeder title */}
+              <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden">
+                <div className="min-h-0 flex-[1.4]">
+                  <LineAnimation
+                    phase={sim.phase}
+                    feeder={sim.targetFeeder}
+                    scenario={sim.activeScenario}
+                    compact
+                  />
+                </div>
+                <div className="min-h-0 flex-[0.75]">
+                  <MetricsChart
+                    history={sim.history}
+                    feederId={sim.targetFeederId}
+                    feeder={sim.targetFeeder}
+                  />
+                </div>
               </div>
             </div>
 

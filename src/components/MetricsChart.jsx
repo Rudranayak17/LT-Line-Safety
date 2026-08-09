@@ -13,14 +13,25 @@ export default function MetricsChart({ history, feederId, feeder }) {
   const data = history[feederId] || []
 
   return (
-    <div className="panel flex h-full min-h-0 flex-col overflow-hidden p-2.5">
-      <div className="mb-1.5 flex shrink-0 flex-wrap items-center justify-between gap-1">
-        <div>
+    <div className="panel flex h-full min-h-0 flex-col overflow-hidden p-2">
+      <div className="mb-1 flex shrink-0 flex-wrap items-center justify-between gap-1">
+        <div className="min-w-0">
           <p className="panel-header !text-[9px]">Telemetry</p>
-          <h3 className="text-xs font-semibold text-white">Voltage &amp; current · {feederId}</h3>
+          <h3 className="truncate text-xs font-semibold text-white">
+            Voltage &amp; current
+            {feederId && (
+              <span className="ml-1 font-mono font-normal text-slate-400">· {feederId}</span>
+            )}
+            {feeder?.name && (
+              <span className="ml-1 font-normal text-slate-500">
+                ({feeder.name}
+                {feeder.pole ? ` · ${feeder.pole}` : ''})
+              </span>
+            )}
+          </h3>
         </div>
         {feeder && (
-          <div className="flex gap-2 font-mono text-[10px]">
+          <div className="flex shrink-0 gap-2 font-mono text-[10px]">
             <span className="text-cyan-400">{feeder.voltage} V</span>
             <span className="text-violet-400">{feeder.current} A</span>
           </div>
@@ -28,7 +39,7 @@ export default function MetricsChart({ history, feederId, feeder }) {
       </div>
       <div className="min-h-0 w-full flex-1">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+          <LineChart data={data} margin={{ top: 2, right: 4, left: 0, bottom: 0 }}>
             <CartesianGrid stroke="#1e293b" strokeDasharray="3 3" />
             <XAxis dataKey="t" hide />
             <YAxis
